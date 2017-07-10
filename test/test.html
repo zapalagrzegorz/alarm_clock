@@ -5,20 +5,31 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
     <title>Pomodoro test with Qunit</title>
-    <link rel="stylesheet" href="..\node_modules\qunitjs\qunit\qunit.css">
-    <script src="..\node_modules\qunitjs\qunit\qunit.js"></script>
+    <!--<link rel="stylesheet" href="..\node_modules\qunitjs\qunit\qunit.css">
+    <script src="..\node_modules\qunitjs\qunit\qunit.js"></script>-->
 </head>
 
 <body>
-    <div id="qunit"></div>
-    <div id="qunit-fixture"></div>
+    <!--<div id="qunit"></div>
+    <div id="qunit-fixture"></div>-->
 
     <div>
-        <button id="stop">stop</button>
-        <button id="start">start</button>
-        <button id="reset">reset</button>
-        <span id="mins">2</span > <span id="sec">2</span>
+        <div>
+            <span id="mins">0</span>
+            <span id="sec">2</span>
+            <div id="clock__panel">
+                <button class="stop">stop</button>
+                <button class="start">start</button>
+                <button class="reset">reset</button>
+                <button class="addMins">+</button>
+                <button class="minMins">-</button>
+                <button class="addSecs">+</button>
+                <button class="minSecs">-</button>
+            </div>
+        </div>
     </div>
+
+    <script src="../build/js/vendor.js"></script>
     <script src="test.js"></script>
 </body>
 

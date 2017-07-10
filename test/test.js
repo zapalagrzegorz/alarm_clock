@@ -1,67 +1,93 @@
 
 
 //  całość znów bardziej przypomina jeden obiekt z metodami
+document.addEventListener('DOMContentLoaded', () => {
+    ( () => {
+        /*********** variables ********************/
+        let secs = document.querySelector('#sec');
+        let mins = document.querySelector('#mins');
+        let intId = 0;
+        // http://soundbible.com/2142-FogHorn-Barge.html
+        let sound = new Howl({
+            src: ['../dev/audio/foghorn-daniel_simon.webm', 'foghorn-daniel_simon.mp3']
+        });
 
-function tick () {
-    let secs;
-    let mins;
-    let intId;
-    //  = start();
-    //  = setInterval(() => {
-    //     secs = Number(document.querySelector('#sec').textContent);
-    //     secs -= 1;
-    //     if (secs == -1) {
-    //         document.querySelector('#sec').textContent = secs = 59;
-    //         mins = Number(document.querySelector('#mins').textContent);
-    //         mins -= 1;
-    //         document.querySelector('#mins').textContent = mins;
-    //         if (mins == 0) {
-    //             // clear interval i
-    //             // wywołaj dźwięk i animację
-    //             return;
-    //         }
-    //     }
-    //     document.querySelector('#sec').textContent = secs;
-    // }, 1000);
-    function clrInt () {
-        clearInterval(intId);
-    }
-    function reset () {
-        clrInt();
-        document.querySelector('#sec').textContent = 0;
-        document.querySelector('#sec').textContent = 0;
-    }
-    function start () {
-        intId = setInterval(function timer () {
-            secs = Number(document.querySelector('#sec').textContent);
-            console.log(secs);
-            secs -= 1;
-            if (secs == -1) {
-                document.querySelector('#sec').textContent = secs = 59;
-                mins = Number(document.querySelector('#mins').textContent);
-                mins -= 1;
-                document.querySelector('#mins').textContent = mins;
-                if (mins == 0) {
-                    // clear interval i
-                    // wywołaj dźwięk i animację
-                    return;
-                    // console.log('mins = 0');
-                }
+
+        /************* Methods *************/
+        function setClock () {
+            function start () {
+                let secPointer;
+                intId = setInterval(function timer () {
+                    secPointer = Number(secs.textContent);
+                    secPointer -= 1;
+                    if (secPointer === -1) {
+                        mins.textContent = Number(mins.textContent) - 1;
+                        if (mins.textContent === '-1') {
+                            mins.textContent = 0;
+                            clearInterval(intId);
+                            intId = 0;
+                        // wywołaj dźwięk i animację
+                            alarm();
+                            return;
+                        }
+                        secs.textContent = secPointer = 59;
+                    }
+                    secs.textContent = secPointer;
+                }, 1000);
             }
-            document.querySelector('#sec').textContent = secs;
-        }, 1000);
-    }
 
-    document.querySelector('#stop').addEventListener('click', clrInt);
-    document.querySelector('#reset').addEventListener('click', reset);
-    document.querySelector('#start').addEventListener('click', start);
+            function alarm () {
+                sound.play();
+            // animation
+            }
+            function clrInt () {
+                clearInterval(intId);
+            }
+            // console.log(event.target);
+            if (!intId) {
+                switch (event.target.classList[0]) {
+                case 'addMins':
+                    if (Number(mins.textContent) + 1 < 60) {
+                        mins.textContent = Number(mins.textContent) + 1;
+                    }
+                    break;
+                case 'minMins':
+                    if (Number(mins.textContent) - 1 >= 0) {
+                        mins.textContent = Number(mins.textContent) - 1;
+                    }
+                    break;
+                case 'addSecs':
+                    if (Number(secs.textContent) + 1 < 60) {
+                        secs.textContent = Number(secs.textContent) + 1;
+                    }
+                    break;
+                case 'minSecs':
+                    if (Number(secs.textContent) - 1 >= 0) {
+                        secs.textContent = Number(secs.textContent) - 1;
+                    }
+                    break;
+                case 'reset':
+                    clrInt();
+                    secs.textContent = 0;
+                    mins.textContent = 0;
+                    break;
 
-        // czy po resecie musze removeEventListener wywoływać
-        // guzik reset by miał wywoływał clrInt oraz usuwał listener 
-        // listen'y bym usuwał wcześniej, przed przypisaniem.
-        // return secs;
+                case 'stop':
+                    clrInt();
+                    break;
+                case 'start':
+                    start(); 
+                    break; 
+                }
+                
+            }
+        }
+        /************* Events *************/
+        document.querySelector('#clock__panel').addEventListener('click', setClock);
+    })();
 }
-tick();
+
+
 
 
 // QUnit.test('calculation test', function (assert) {
