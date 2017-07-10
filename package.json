@@ -1,10 +1,11 @@
 {
   "name": "fcc",
   "version": "1.0.0",
-  "description": "free code camp challenge",
+  "description": "free code camp pomodoro clock challenge",
   "main": "index.html",
   "dependencies": {
-    "bootstrap": "^4.0.0-alpha.6"
+    "bootstrap": "^4.0.0-alpha.6",
+    "howler": "^2.0.4"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.1",

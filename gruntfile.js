@@ -4,10 +4,10 @@ module.exports = function (grunt) {
     require('load-grunt-tasks')(grunt);
 
     // Tablica zawierająca zewnętrzne javascripty, które chcemy konkatenować do vendor.js
-    // var vendorJs = [
-    //     // 'bower_components/jquery/dist/jquery.min.js',
+    var vendorJs = [
+        'node_modules/howler/dist/howler.core.min.js',
     //     // 'bower_components/bootstrap/js/dist/util.js',
-    // ];
+    ];
     // Project configuration.
     grunt.initConfig({
         watch: {
@@ -49,7 +49,7 @@ module.exports = function (grunt) {
         concat: {
             dev: {
                 files: {
-                    // 'build/js/vendor.js': [vendorJs],
+                    'build/js/vendor.js': [vendorJs],
                     'dev/temp/scripts.js': ['dev/js/*.js']
                 }
             },
@@ -95,7 +95,7 @@ module.exports = function (grunt) {
                 sourceMap: false,
                 includePaths: [
                     // 'bower_components/font-awesome/scss',
-                    'bower_components/bootstrap/scss'
+                    'node_modules/bootstrap/scss'
                 ]
             },
             dev: {
