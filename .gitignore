@@ -11,3 +11,4 @@ bower_components/*/**
 /.vscode/settings.json
 /dev/css/main.css
 /build
+/dev/js/scriptsEs5.**
