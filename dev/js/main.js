@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
         /************* Methods *************/
-        function setClock () {
+        function setClock (e) {
             function start () {
                 let secPointer;
                 intId = setInterval(function timer () {
@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }, 1000);
             }
 
-            switch (event.target.classList[0]) {
+            switch (e.target.classList[0]) {
             case 'reset':
                 clearInterval(intId);
                 intId = 0;
@@ -80,6 +80,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         /************* Events *************/
-        document.querySelector('.inner').addEventListener('click', setClock);
+        document.querySelector('.inner').addEventListener('click', setClock, false);
     })();
 });
