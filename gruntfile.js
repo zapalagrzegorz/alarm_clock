@@ -5,24 +5,28 @@ module.exports = function (grunt) {
 
     // Tablica zawierająca zewnętrzne javascripty, które chcemy konkatenować do vendor.js
     var vendorJs = [
-        'node_modules/howler/dist/howler.core.min.js',
-    //     // 'bower_components/bootstrap/js/dist/util.js',
+        // 'node_modules/howler/dist/howler.core.min.js',
+        //     // 'bower_components/bootstrap/js/dist/util.js',
     ];
     // Project configuration.
     grunt.initConfig({
         watch: {
             scripts: {
-                files: ['dev/js/*.js'],
+                files: ['dev/js/main.js'],
                 tasks: ['js']
             },
             sass: {
                 files: ['dev/css/*.scss'],
                 tasks: ['sass:dev']
             },
+            // refresh: {
+                // files: 'scriptsEs5.js'
+            // }
             options: {
                 spawn: false,
                 livereload: false,
-                event: ['added', 'changed']
+                event: ['added', 'changed'],
+                debounceDelay: 1000,
             }
         },
         browserSync: {
@@ -31,7 +35,8 @@ module.exports = function (grunt) {
                     src: [
                         'build/css/*.css',
                         'build/js/*.js',
-                        '*.html'
+                        '*.html',
+                        'dev/js/scriptsEs5.js'
                     ]
                 },
                 options: {
@@ -42,15 +47,22 @@ module.exports = function (grunt) {
                 }
             }
         },
+        browserify: {
+            dist: {
+                src: 'dev/js/main.js',
+                dest: 'dev/js/bundled.js',
+            }
+        },
         clean: {
             build: ['build/**/*'],
-            dev_temp: ['dev/temp/']
+            dev_temp: ['dev/temp/', 'dev/js/bundled.js', 'dev/js/scriptsEs5']
         },
         concat: {
             dev: {
                 files: {
-                    'build/js/vendor.js': [vendorJs],
-                    'dev/temp/scripts.js': ['dev/js/*.js']
+                    // browserify do the job
+                    // 'build/js/vendor.js': [vendorJs],
+                    // 'dev/temp/scripts.js': ['dev/js/*.js']
                 }
             },
             dist: {
@@ -67,7 +79,7 @@ module.exports = function (grunt) {
                     presets: ['env']
                 },
                 files: {
-                    'dev/temp/scriptsEs5.js': 'dev/temp/scripts.js'
+                    'dev/js/scriptsEs5.js': 'dev/js/bundled.js'
                 }
             },
             dev: {
@@ -76,7 +88,7 @@ module.exports = function (grunt) {
                     presets: ['env']
                 },
                 files: {
-                    'build/js/scriptsEs5.js': 'dev/temp/scripts.js'
+                    'dev/js/scriptsEs5.js': 'dev/js/bundled.js'
                 }
             }
         },
@@ -86,7 +98,7 @@ module.exports = function (grunt) {
             },
             dist: {
                 files: {
-                    'build/js/scripts.min.js': 'dev/temp/scriptsEs5.js'
+                    'build/js/scripts.min.js': 'dev/js/scriptsEs5.js'
                 }
             }
         },
@@ -129,7 +141,7 @@ module.exports = function (grunt) {
                 ]
             },
             dist: {
-               src: 'build/css/main.css',
+                src: 'build/css/main.css',
                 dest: 'build/css/main.min.css'
             }
         },
@@ -143,10 +155,14 @@ module.exports = function (grunt) {
                 }]
             }
         }
-});
+    });
 
-// Default task(s).
-grunt.registerTask('default', ['clean', 'sass:dev', 'concat:dev', 'babel:dev', 'imagemin', 'browserSync', 'watch']);
-grunt.registerTask('dist', ['clean', 'imagemin', 'sass:dist', 'postcss', 'concat:dist', 'babel:dist', 'uglify', 'clean:dev_temp', ])
+    // Default task(s).
+    grunt.registerTask('default', ['clean', 'sass:dev', 'concat:dev', 'browserify', 'babel:dev', 'imagemin', 'browserSync', 'watch']);
+    grunt.registerTask('dist', ['clean', 'imagemin', 'sass:dist', 'postcss', 'browserify', 'babel:dist', 'uglify', 'clean:dev_temp']);
+    grunt.registerTask('css', ['sass:dev', 'postcss']);
+    grunt.registerTask('js', ['browserify', 'babel:dev', 'clean:dev_temp']);
+    // grunt.registerTask('browserify', ['browserify', 'babel:dev']);
+
 
 };

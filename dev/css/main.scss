@@ -1,16 +1,17 @@
-/*! HTML5 Boilerplate v5.0 | MIT License | http://h5bp.com/ */
-
 html {
     color: #222;
-    font-size: 1em;
+    font-size: 100%;
     line-height: 1.4;
+}
+body {
+    min-width: 400px;
 }
 
 /* ==========================================================================
    Bootstrap 
    ========================================================================== */
-@import "variables";
-@import "mixins";
+// @import "variables";
+// @import "mixins";
 // @import "custom";
 
 // Reset and dependencies
@@ -22,7 +23,7 @@ html {
 // @import "type";
 // @import "images";
 // @import "code";
-@import "grid";
+// @import "grid";
 // @import "tables";
 // @import "forms";
 // @import "buttons";
