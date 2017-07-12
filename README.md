@@ -9,6 +9,7 @@ You can:
 - set the timer minutes and seconds
 - stop for a while or reset
 - see it live on [surge.sh](http://fccpomodoroclock.surge.sh/)
+
 Features:
 - no css framework
 - vanillaJs
