@@ -6,7 +6,7 @@ module.exports = function (grunt) {
     // Tablica zawierająca zewnętrzne javascripty, które chcemy konkatenować do vendor.js
     var vendorJs = [
         // 'node_modules/howler/dist/howler.core.min.js',
-        //     // 'bower_components/bootstrap/js/dist/util.js',
+        //  'node_modules/bootstrap/js/dist/util.js',
     ];
     // Project configuration.
     grunt.initConfig({
@@ -136,7 +136,7 @@ module.exports = function (grunt) {
                 map: false,
                 processors: [
                     require('pixrem')(), // add fallbacks for rem units
-                    require('autoprefixer')({ browsers: 'last 2 versions' }), // add vendor prefixes
+                    require('autoprefixer')({ browsers: 'last 3 versions' }), // add vendor prefixes
                     require('cssnano')() // minify the result
                 ]
             },
