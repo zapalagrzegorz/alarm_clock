@@ -1,5 +1,6 @@
 module.exports = function (grunt) {
 
+    const sass = require('node-sass');
     // Load the plugins tasks 
     require('load-grunt-tasks')(grunt);
 
@@ -104,11 +105,8 @@ module.exports = function (grunt) {
         },
         sass: {
             options: {
+                implementation: sass,
                 sourceMap: false,
-                includePaths: [
-                    // 'bower_components/font-awesome/scss',
-                    'node_modules/bootstrap/scss'
-                ]
             },
             dev: {
                 files:
